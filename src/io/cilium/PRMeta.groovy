@@ -92,6 +92,7 @@ class PRMeta implements Serializable {
             this.importPR()
             return true
         } catch(Exception e) {
+            this.script.echo("IsPR:Debug: is not a PR cause '${e}'")
             return false
         }
     }

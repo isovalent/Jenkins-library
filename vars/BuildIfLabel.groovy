@@ -8,6 +8,7 @@ def call(String label, String job){
 
     pr = new PRMeta(this)
     if (!pr.IsPR()){
+        this.echo("BuildIfLabel: is not a PR")
         return
     }
 

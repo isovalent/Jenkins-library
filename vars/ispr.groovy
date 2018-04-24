@@ -6,5 +6,5 @@ import io.cilium.PRMeta
 
 def call(){
     pr = new PRMeta(this)
-    return oo.IsPR()
+    return pr.IsPR()
 }
