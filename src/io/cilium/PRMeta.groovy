@@ -79,8 +79,13 @@ class PRMeta implements Serializable {
         Imports PR metadata from Github API
     */
     def GHPullRequest importPR(){
+        def repo
         this.fetchAndSetEnvVariables()
-        def repo = GitHub.connect(this.GHUser, this.GHToken).getRepository(this.repository)
+        try {
+            repo = GitHub.connectUsingOAuth(this.GHToken).getRepository(this.repository)
+        } catch(Exception e) {
+            repo = GitHub.connectUsingPassword(this.GHUser, this.GHToken).getRepository(this.repository)
+        }
         return repo.getPullRequest(this.pullRequest.toInteger())
     }
 
