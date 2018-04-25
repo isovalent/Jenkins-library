@@ -79,13 +79,7 @@ class PRMeta implements Serializable {
         Imports PR metadata from Github API
     */
     def GHPullRequest importPR(){
-        def repo
-        this.fetchAndSetEnvVariables()
-        try {
-            repo = GitHub.connectUsingOAuth(this.GHToken).getRepository(this.repository)
-        } catch(Exception e) {
-            repo = GitHub.connectUsingPassword(this.GHUser, this.GHToken).getRepository(this.repository)
-        }
+        def repo = this.getRepo()
         return repo.getPullRequest(this.pullRequest.toInteger())
     }
 
@@ -100,6 +94,22 @@ class PRMeta implements Serializable {
             this.script.echo("IsPR:Debug: is not a PR cause '${e}'")
             return false
         }
+    }
+
+    /*
+        getRepo return GHRepo object for the PR
+    */
+    def getRepo() {
+        def repo
+        this.fetchAndSetEnvVariables()
+
+        try {
+            repo = GitHub.connectUsingOAuth(this.GHToken).getRepository(this.repository)
+        } catch(Exception e) {
+            repo = GitHub.connectUsingPassword(this.GHUser, this.GHToken).getRepository(this.repository)
+        }
+
+        return repo
     }
 
     /*
