@@ -28,7 +28,7 @@ def call(String state, String context){
     }
 
     try{
-        def sha1 = this.env.getProperty("sha1")
+        def sha1 = this.env.getProperty("ghprbActualCommit")
         def url = this.env.getProperty("BUILD_URL")
         repo.createCommitStatus(sha1, GHState, url, "", "${context}")
     } catch(Exception e) {
